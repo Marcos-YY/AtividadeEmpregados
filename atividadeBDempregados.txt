@@ -1,0 +1,208 @@
+create database empregados;
+use empregados;
+
+CRIANDO TABELAS____________________________________________________
+create table departamento(
+id int not null auto_increment primary key,
+nome varchar(80) not null);
+
+create table funcao(
+id int not null auto_increment primary key,
+cargo varchar(100) not null,
+id_departamento int not null,
+foreign key(id_departamento) references departamento(id));
+
+create table empregado(
+id int not null auto_increment primary key,
+data_nasc date not null, nome varchar(40) not null,
+sobrenome varchar(40) not null,
+genero varchar(1) not null,
+id_funcao int not null,
+foreign key(id_funcao) references funcao(id));
+
+create table endereco(
+logradouro varchar(100) not null, 
+numero varchar(10) not null, 
+bairro varchar(50) not null, 
+cidade varchar(50) not null, 
+uf char(2) not null, 
+id_empregado int not null primary key, 
+foreign key(id_empregado) references empregado(id));
+
+create table telefone(
+id_empregado int not null primary key, 
+ddd smallint(3) not null, 
+numero int not null,
+foreign key(id_empregado) references empregado(id));
+
+create table doc(
+id_empregado int not null primary key unique, 
+rg int not null, 
+cpf bigint not null unique,
+cnpj bigint unique,
+foreign key(id_empregado) references empregado(id));
+
+create table contrato(
+id int not null auto_increment primary key, 
+data_inicio date not null, 
+data_fim date, 
+salario float, 
+id_empregado int not null, 
+foreign key(id_empregado) references empregado(id));
+
+inserindo dados__________________________________________________________
+
+insert into departamento (nome) values ('administracao');
+insert into departamento (nome) values ('atendimento ao cliente');
+insert into departamento (nome) values ('marketing');
+insert into departamento (nome) values ('financeiro');
+insert into departamento (nome) values ('logistica');
+insert into departamento (nome) values ('Tecnologia da informacao');
+insert into departamento (nome) values ('estrategia');
+insert into departamento (nome) values ('recursos humanos');
+insert into departamento (nome) values ('auditoria');
+insert into departamento (nome) values ('servicos gerais');
+
+insert into funcao (cargo,id_departamento) values ('presidente',1);
+insert into funcao (cargo,id_departamento) values ('vice-presidente',1);
+insert into funcao (cargo,id_departamento) values ('helpdesk',2);
+insert into funcao (cargo,id_departamento) values ('telemarketing',2);
+insert into funcao (cargo,id_departamento) values ('designer',3);
+insert into funcao (cargo,id_departamento) values ('midias sociais',3);
+insert into funcao (cargo,id_departamento) values ('contabil',4);
+insert into funcao (cargo,id_departamento) values ('auditor fiscal',4);
+insert into funcao (cargo,id_departamento) values ('gerente de logistica',5);
+insert into funcao (cargo,id_departamento) values ('coordenador de comercio',5);
+insert into funcao (cargo,id_departamento) values ('gerente de projeto',6);
+insert into funcao (cargo,id_departamento) values ('analista senior',6);
+insert into funcao (cargo,id_departamento) values ('desenvolvedor',6);
+insert into funcao (cargo,id_departamento) values ('CEO',7);
+insert into funcao (cargo,id_departamento) values ('CIO',7);
+insert into funcao (cargo,id_departamento) values ('recrutador',8);
+insert into funcao (cargo,id_departamento) values ('departamento pessoal',8);
+insert into funcao (cargo,id_departamento) values ('analista de testes',9);
+insert into funcao (cargo,id_departamento) values ('limpeza',10);
+insert into funcao (cargo,id_departamento) values ('seguranca',10);
+insert into funcao (cargo,id_departamento) values ('secretaria',10);
+
+insert into empregado (data_nasc,nome,sobrenome,genero,id_funcao)
+values ('1999-09-07', 'Marcos', 'Willian', 'M', 1);
+insert into empregado (data_nasc,nome,sobrenome,genero,id_funcao)
+values ('2001-04-03', 'Pedro', 'souza', 'M', 3);
+insert into empregado (data_nasc,nome,sobrenome,genero,id_funcao)
+values ('1997-07-22', 'Leticia', 'Barboza', 'F', 6);
+insert into empregado (data_nasc,nome,sobrenome,genero,id_funcao)
+values ('1999-08-09', 'Gabriel', 'Lopes', 'M', 7);
+insert into empregado (data_nasc,nome,sobrenome,genero,id_funcao)
+values ('1989-02-13', 'Paulo', 'Cezar', 'M', 10);
+insert into empregado (data_nasc,nome,sobrenome,genero,id_funcao)
+values ('1985-09-23', 'Israel', 'Rodrigues', 'M', 12);
+insert into empregado (data_nasc,nome,sobrenome,genero,id_funcao)
+values ('1990-01-30', 'Thiago', 'Santos', 'M', 14);
+insert into empregado (data_nasc,nome,sobrenome,genero,id_funcao)
+values ('1999-02-11', 'Thais', 'Ribeiro', 'F', 17);
+insert into empregado (data_nasc,nome,sobrenome,genero,id_funcao)
+values ('1973-07-31', 'Luzia', 'Silva', 'F', 19);
+insert into empregado (data_nasc,nome,sobrenome,genero,id_funcao)
+values ('2000-03-17', 'Natalia', 'Santana', 'F', 21);
+
+insert into contrato (data_inicio, data_fim, salario, id_empregado)
+values ('2020-04-03', '2024-04-03', null, 1);
+insert into contrato (data_inicio, data_fim, salario, id_empregado)
+values ('2021-07-01', null, 1265, 2);
+insert into contrato (data_inicio, data_fim, salario, id_empregado)
+values ('2019-01-12', null, 1850.70, 3);
+insert into contrato (data_inicio, data_fim, salario, id_empregado)
+values ('2022-03-07', null, 2500, 4);
+insert into contrato (data_inicio, data_fim, salario, id_empregado)
+values ('2020-05-05', '2022-05-05', 3000, 5);
+insert into contrato (data_inicio, data_fim, salario, id_empregado)
+values ('2019-10-01', null, null, 6);
+insert into contrato (data_inicio, data_fim, salario, id_empregado)
+values ('2020-04-03', '2024-04-03', 4500, 7);
+insert into contrato (data_inicio, data_fim, salario, id_empregado)
+values ('2021-08-04', null, 2000, 8);
+insert into contrato (data_inicio, data_fim, salario, id_empregado)
+values ('2016-01-05', null, 1450, 9);
+insert into contrato (data_inicio, data_fim, salario, id_empregado)
+values ('2020-12-14', null, 1350, 10);
+
+insert into endereco (logradouro, numero, bairro, cidade, uf, id_empregado)
+values ('chacara 129 condominio alvorada', '24a', 'rua 8', 'vicente pires','DF', 1);
+insert into endereco (logradouro, numero, bairro, cidade, uf, id_empregado)
+values ('qnn 25 conjunto e', '36', 'ceilandia norte', 'ceilandia','DF', 2);
+insert into endereco (logradouro, numero, bairro, cidade, uf, id_empregado)
+values ('qng 32 conjunto f', '45', 'taguatinga norte', 'taguatinga','DF', 3);
+insert into endereco (logradouro, numero, bairro, cidade, uf, id_empregado)
+values ('qi 6 conjunto m', '4', 'lago norte', 'brasilia','DF', 4);
+insert into endereco (logradouro, numero, bairro, cidade, uf, id_empregado)
+values ('qi 12 conjunto l', '8', 'lago sul', 'brasilia','DF', 5);
+insert into endereco (logradouro, numero, bairro, cidade, uf, id_empregado)
+values ('qi 6 conjunto m', '16', 'lago norte', 'brasilia','DF', 6);
+insert into endereco (logradouro, numero, bairro, cidade, uf, id_empregado)
+values ('EQN 504/507 conjunto m', '45', 'asa norte', 'brasilia','DF', 7);
+insert into endereco (logradouro, numero, bairro, cidade, uf, id_empregado)
+values ('EQS 701/702 conjunto d', '11', 'asa sul', 'brasilia','DF', 8);
+insert into endereco (logradouro, numero, bairro, cidade, uf, id_empregado)
+values ('rua quatorze', '15', 'quadra 33', 'Aguas lindas','GO', 9);
+insert into endereco (logradouro, numero, bairro, cidade, uf, id_empregado)
+values ('rua 18', '28', 'rua caite', 'valparaiso de goias','GO', 10);
+
+insert into telefone (id_empregado, DDD, numero) values (1, 061, 991075845);
+insert into telefone (id_empregado, DDD, numero) values (2, 061, 986542587);
+insert into telefone (id_empregado, DDD, numero) values (3, 061, 994265481);
+insert into telefone (id_empregado, DDD, numero) values (4, 061, 986548796);
+insert into telefone (id_empregado, DDD, numero) values (5, 061, 984258721);
+insert into telefone (id_empregado, DDD, numero) values (6, 061, 991075845);
+insert into telefone (id_empregado, DDD, numero) values (7, 061, 994965835);
+insert into telefone (id_empregado, DDD, numero) values (8, 061, 981584795);
+insert into telefone (id_empregado, DDD, numero) values (9, 062, 991670055);
+insert into telefone (id_empregado, DDD, numero) values (10, 062, 991250775);
+
+insert into doc (id_empregado, rg, cpf, cnpj) values (1, 2548965, 15985212364,02258336000185);
+insert into doc (id_empregado, rg, cpf, cnpj) values (2, 4348521, 45678925936,null);
+insert into doc (id_empregado, rg, cpf, cnpj) values (3, 5463978, 95621536578,null);
+insert into doc (id_empregado, rg, cpf, cnpj) values (4, 4568526, 68547122645,null);
+insert into doc (id_empregado, rg, cpf, cnpj) values (5, 5826478, 36928547158,04369789000185);
+insert into doc (id_empregado, rg, cpf, cnpj) values (6, 8483697, 25848952136,45249368000197);
+insert into doc (id_empregado, rg, cpf, cnpj) values (7, 2487893, 22636978915,63147654000199);
+insert into doc (id_empregado, rg, cpf, cnpj) values (8, 4885632, 78925845625,null);
+insert into doc (id_empregado, rg, cpf, cnpj) values (9, 5582635, 58214736989,null);
+insert into doc (id_empregado, rg, cpf, cnpj) values (10, 3058456, 04568416578,null);
+
+IF NULL_____________________________________________________________________________________
+
+select id_empregado,ifnull(cnpj, 'Sem valor') as 'Sem CNPJ' from doc;
+select id_empregado,data_inicio,ifnull(data_fim, 'Sem prazo definido') as 'fim do contrato' from contrato;
+select id_empregado,ifnull(salario, 'Sem valor definido') as 'salario' from contrato;
+select id_empregado,ifnull(salario,'Funcionario Atipico') as 'salario',
+ifnull(data_fim, 'Funcionario comum') as 'Fim do contrato' from contrato;
+select ifnull(salario, "sem valor definido") as 'salarios',empregado.nome from contrato
+inner join empregado
+on empregado.id = contrato.id_empregado;
+
+NULL IF_____________________________________________________________________________________________________
+
+select salario,nullif(salario, 1450) as 'nova tabela' from contrato;
+select *,nullif(ddd, 62) as 'goias nulo' from telefone;
+select nullif(cargo, 'seguranca') from funcao;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
