@@ -181,28 +181,82 @@ select ifnull(salario, "sem valor definido") as 'salarios',empregado.nome from c
 inner join empregado
 on empregado.id = contrato.id_empregado;
 
-NULL IF_____________________________________________________________________________________________________
+NULL IF_________________________________________________________________________
 
 select salario,nullif(salario, 1450) as 'nova tabela' from contrato;
 select *,nullif(ddd, 62) as 'goias nulo' from telefone;
-select nullif(cargo, 'seguranca') from funcao;
+select nullif(cargo, 'seguranca') as 'Sem seguranca' from funcao;
+select nome,sobrenome,nullif(id_funcao, 1) as 'dia de eleicao' from empregado;
+select nullif(cargo, 'CEO') as 'nova funcao',empregado.nome from funcao
+inner join empregado
+on empregado.id_funcao = funcao.id;
 
+CASE___________________________________________________________________________
 
+SELECT id_funcao,
+CASE WHEN genero = 'M' THEN 'Masculino' 
+ELSE 'Feminino' 
+END AS "genero"
+FROM empregado;
 
+SELECT id_empregado,
+CASE WHEN salario < 4000 THEN 'cargo comum' 
+ELSE 'Super cargo' 
+END AS "Posicao"
+FROM contrato;
 
+SELECT id_empregado,
+CASE WHEN DDD = 62 THEN 'entorno' 
+ELSE 'Local (DF)' 
+END AS "Localidade"
+FROM telefone;
 
+SELECT nome,
+CASE WHEN data_nasc > '1997-01-01' THEN 'Abaixo de 25 anos' 
+ELSE 'Acima de 25 anos' 
+END AS "idade"
+FROM empregado;
 
+SELECT cargo,
+CASE WHEN id_departamento = 1 THEN 'Staff'
+ELSE 'normal' 
+END AS "posicao"
+FROM funcao;
 
+COALESE_____________________________________________________________
 
+select id,salarios from contrato where salario is not null;
+select id,coalesce(null,salario, 'Valores Atipicos') 'salarios' from contrato;
+select id, id_empregado,coalesce(null,data_fim,'sem valor definido') as 'Fim do contrato' from contrato;
+select id_empregado,coalesce(cnpj,'sem cnpj') as cnpj from doc;
 
+select nome,coalesce(doc.cnpj,'Nao possui CNPJ') as CNPJ from empregado
+inner join doc on
+empregado.id = doc.id_empregado;
 
+CONCAT____________________________________________________________________
 
+SELECT CONCAT(nome, "  -  ", data_nasc, "  -  ", funcao.cargo) AS perfil
+FROM empregado 
+inner join funcao on
+empregado.id_funcao = funcao.id;
 
+SELECT CONCAT(cargo, "  --  ", departamento.nome) AS 'funcao / setor'
+FROM funcao 
+inner join departamento on
+funcao.id_departamento = departamento.id;
 
+SELECT CONCAT(nome, "  iniciou em  ", contrato.data_inicio) AS 'inicio na empresa'
+FROM empregado 
+inner join contrato on
+contrato.id_empregado = empregado.id;
 
+SELECT CONCAT(nome, "  nascido em  ", YEAR(data_nasc)) AS 'Ano de nascimento'
+FROM empregado;
 
-
-
-
-
-
+SELECT CONCAT(nome, "  termina o contrato em  ", YEAR(contrato.data_fim)) AS ' Fim de contrato'
+FROM empregado 
+inner join contrato on
+contrato.id_empregado = empregado.id
+where data_fim is not null;
+__________________________________________________________________________________________________
