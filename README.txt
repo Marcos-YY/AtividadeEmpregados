@@ -1,4 +1,4 @@
-Atividade 2 de TABD
+Atividade 3 de TABD
 fazer um DER de um banco.A partir desse DER,
 criar o banco no qual cada tabela deve conter 10 dados.
 A partir desse banco, construir 5 comandos diferentes utilizando os comandos:
